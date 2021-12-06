@@ -203,7 +203,7 @@ local function binaryInsert(t, value)
         -- invariants: value >= t[i] for all i < low
         --             value < t[i] for all i > high
         local mid = floor((low + high) / 2)
-        if value < t[mid] then
+        if value and t[mid] and value < t[mid] then
             high = mid - 1
         else
             low = mid + 1
@@ -235,6 +235,7 @@ function PlexusLayoutByRoleDetailed:PostInitialize()
 end
 
 function PlexusLayoutByRoleDetailed:PostEnable()
+    PlexusLayoutByRoleDetailed:RegisterEvent("INSPECT_READY", "InspectReady")
     LGIST.RegisterCallback(self, "GroupInSpecT_Update", "OnUnitRoleChanged")
     LGIST.RegisterCallback(self, "GroupInSpecT_Update", "OnUnitJoined")
     --LGIST.Registercallback(self, "GroupInSpecT_Remove", "OnUnitLeft")
@@ -244,6 +245,10 @@ function PlexusLayoutByRoleDetailed:PostDisable()
     LGIST.UnregisterCallback(self, "GroupInSpecT_Update")
     LGIST.UnregisterCallback(self, "GroupInSpecT_Update")
     --LGIST.UnregisterCallback(self, "GroupInSpecT_Remove")
+end
+
+function PlexusLayoutByRoleDetailed:InspectReady(event, guid)
+    LGIST:Rescan(guid)
 end
 
 function PlexusLayoutByRoleDetailed:OnUnitRoleChanged(event, guid, unit, oldRole, newRole)
