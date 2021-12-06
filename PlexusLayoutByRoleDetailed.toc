@@ -1,0 +1,24 @@
+## Interface: 90105
+## Interface-Retail: 90105
+## Interface-Classic: 11400
+## Interface-BCC: 20502
+## Version: @project-version@
+
+## Title: PlexusLayoutByRoleDetailed
+## Notes: Plexus layout grouped by raid role.
+
+## Author: Doadin
+## X-Curse-credits-former-author: Johnny C. Lam
+## X-License: MIT License
+## X-Website: https://www.curseforge.com/wow/addons/plexuslayoutbyroledetailed
+## X-Curse-Project-ID: 552856
+
+## X-Embeds: LibGroupInSpecT-1.1
+#@no-lib-strip@
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibGroupInSpecT-1.1\LibGroupInSpecT-1.1.lua
+#@end-no-lib-strip@
+## Dependencies: Plexus, LibGroupInSpecT-1.1
+
+PlexusLayoutByRoleDetailed.lua
