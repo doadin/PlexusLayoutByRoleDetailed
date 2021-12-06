@@ -14,29 +14,36 @@
 
 -- GLOBALS: Plexus
 
+local Plexus = _G.Plexus
 local PlexusLayoutByRoleDetailed = Plexus:NewModule("PlexusLayoutByRoleDetailed")
 
 local ceil = math.ceil
 local floor = math.floor
 local ipairs = ipairs
 local pairs = pairs
-local setmetatable = setmetatable
+--local setmetatable = setmetatable
 local strsub = string.sub
 local tconcat = table.concat
 local tinsert = table.insert
 local tonumber = tonumber
-local wipe = table.wipe
+local wipe = _G.wipe
 -- GLOBALS: _G
 -- GLOBALS: GetClassInfo
 -- GLOBALS: GetInstanceInfo
 -- GLOBALS: LibStub
 -- GLOBALS: UnitGUID
 -- GLOBALS: UnitIsPlayer
-local MAX_RAID_MEMBERS = MAX_RAID_MEMBERS -- FrameXML/RaidFrame.lua
-local MEMBERS_PER_RAID_GROUP = MEMBERS_PER_RAID_GROUP -- FrameXML/RaidFrame.lua
+local MAX_RAID_MEMBERS = _G.MAX_RAID_MEMBERS -- FrameXML/RaidFrame.lua
+local MEMBERS_PER_RAID_GROUP = _G.MEMBERS_PER_RAID_GROUP -- FrameXML/RaidFrame.lua
 
 local PlexusLayout = Plexus:GetModule("PlexusLayout")
+local PlexusRoster = Plexus:GetModule("PlexusRoster")
+local UnitIsPlayer = _G.UnitIsPlayer
+local GetInstanceInfo = _G.GetInstanceInfo
+local LibStub = _G.LibStub
 local LGIST = LibStub:GetLibrary("LibGroupInSpecT-1.1")
+
+local GetClassInfo = _G.GetClassInfo
 
 -- The localized string table.
 local L = Plexus.L
@@ -160,10 +167,10 @@ do
                 order = 20,
                 type = "multiselect",
                 values = healerClassLocalization,
-                get = function(info, k)
+                get = function(_, k)
                     return PlexusLayoutByRoleDetailed.db.profile.meleeHealer[k]
                 end,
-                set = function(info, k, v)
+                set = function(_, k, v)
                     PlexusLayoutByRoleDetailed.db.profile.meleeHealer[k] = v
                     PlexusLayoutByRoleDetailed:UpdateRoster()
                 end,
@@ -173,10 +180,10 @@ do
                 desc = L["Enable the Blizzard-assigned role to supersede the specialization role."],
                 order = 30,
                 type = "toggle",
-                get = function(info)
+                get = function(_)
                     return PlexusLayoutByRoleDetailed.db.profile.useBlizzardRole
                 end,
-                set = function(info, value)
+                set = function(_, value)
                     PlexusLayoutByRoleDetailed.db.profile.useBlizzardRole = value
                     PlexusLayoutByRoleDetailed:UpdateRoster()
                 end,
@@ -280,7 +287,7 @@ function PlexusLayoutByRoleDetailed:ToRaidRole(guid, role)
         end
     end
     -- Prefer the Blizzard role for tanks and healers if requested.
-    if self.db.profile.useBlizzardRole then		
+    if self.db.profile.useBlizzardRole then
         local info = LGIST:GetCachedInfo(guid)
         local blizzardRole = info.spec_role
         if blizzardRole == "TANK" then
