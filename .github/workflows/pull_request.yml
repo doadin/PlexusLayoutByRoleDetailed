@@ -21,14 +21,3 @@ jobs:
         uses: BigWigsMods/packager@master
         with:
             args: -g retail -d
-
-      - name: Package Classic
-        uses: BigWigsMods/packager@master
-        with:
-            args: -g classic -m .pkgmeta-classic -d
-
-      - name: Package BC Classic
-        uses: BigWigsMods/packager@master
-        with:
-          args: -g bcc -m .pkgmeta-tbc -d
-
