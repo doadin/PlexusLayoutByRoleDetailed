@@ -222,7 +222,7 @@ end
 
 function PlexusLayoutByRoleDetailed:PostInitialize()
     local layout = self.layout
-    layout.name = L["By Raid Role"]
+    layout.name = L["By Raid Role Detailed"]
     layout.defaults = {
         sortMethod = "NAME",
         unitsPerColumn = MEMBERS_PER_RAID_GROUP,
@@ -237,13 +237,13 @@ end
 function PlexusLayoutByRoleDetailed:PostEnable()
     LGIST.RegisterCallback(self, "GroupInSpecT_Update", "OnUnitRoleChanged")
     LGIST.RegisterCallback(self, "GroupInSpecT_Update", "OnUnitJoined")
-    LGIST.Registercallback(self, "GroupInSpecT_Remove", "OnUnitLeft")
+    --LGIST.Registercallback(self, "GroupInSpecT_Remove", "OnUnitLeft")
 end
 
 function PlexusLayoutByRoleDetailed:PostDisable()
     LGIST.UnregisterCallback(self, "GroupInSpecT_Update")
     LGIST.UnregisterCallback(self, "GroupInSpecT_Update")
-    LGIST.UnregisterCallback(self, "GroupInSpecT_Remove")
+    --LGIST.UnregisterCallback(self, "GroupInSpecT_Remove")
 end
 
 function PlexusLayoutByRoleDetailed:OnUnitRoleChanged(event, guid, unit, oldRole, newRole)
@@ -277,7 +277,7 @@ end
 -- Convert the role associated with the GUID to the raid role,
 -- accounting for melee healers and Blizzard roles.
 function PlexusLayoutByRoleDetailed:ToRaidRole(guid, role)
-    local raidRole = role
+    local raidRole = role or ""
     -- Adjust role if this healer is a "melee healer".
     if raidRole == "healer" then
         local info = LGIST:GetCachedInfo(guid)
