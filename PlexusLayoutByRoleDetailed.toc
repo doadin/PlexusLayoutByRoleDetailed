@@ -22,4 +22,6 @@ Libs\LibGroupInSpecT-1.1\LibGroupInSpecT-1.1.lua
 #@end-no-lib-strip@
 ## Dependencies: Plexus
 
+## IconTexture: Interface\AddOns\Plexus\Media\icon
+
 PlexusLayoutByRoleDetailed.lua
